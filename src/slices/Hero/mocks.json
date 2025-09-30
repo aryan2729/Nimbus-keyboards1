@@ -1,0 +1,36 @@
+[
+	{
+		"__TYPE__": "SharedSliceContent",
+		"variation": "default",
+		"primary": {
+			"heading": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "heading1",
+						"content": {
+							"text": "Escape"
+						}
+					}
+				]
+			},
+			"body": {
+				"__TYPE__": "StructuredTextContent",
+				"value": [
+					{
+						"type": "paragraph",
+						"content": {
+							"text": "Sint deserunt dolore nisi ut enim culpa in eu consequat est mollit in."
+						}
+					}
+				]
+			},
+			"buy_button_text": {
+				"__TYPE__": "FieldContent",
+				"value": "radio",
+				"type": "Text"
+			}
+		},
+		"items": []
+	}
+]
