@@ -3,7 +3,7 @@ import { Roboto_Flex } from "next/font/google";
 import "./globals.css";
 
 const robotoFlex = Roboto_Flex({
-  variable: "--font-robot-flex",
+  variable: "--font-roboto-flex",
   subsets: ["latin"],
   display : "swap",
   axes : ["wdth","slnt","opsz"]
