@@ -1,7 +1,8 @@
 "use client"
 
 import { Keyboard } from "@/components/Keyboard";
-import { Environment, PerspectiveCamera } from "@react-three/drei";
+import { Keycap } from "@/components/Keycap";
+import { Environment, Float, PerspectiveCamera } from "@react-three/drei";
 import { useControls } from "leva";
 
 
@@ -22,7 +23,7 @@ export function Scene(){
 
     return ( // here we can't use div etc cuz we're using here ( React Three Fiber )
 
-        <group>             {/* use groups here */}
+        <group>             {/* use groups here same like div */}
 
             <PerspectiveCamera  makeDefault position={[0,0,4]} fov={50} />          {/* like camera thing for perspective*/}
             <Keyboard scale={9}
@@ -30,6 +31,21 @@ export function Scene(){
                     rotation={[1.6 , 0.4 , 0]}   
 
              />
+            
+
+            //keycaps  again group | rotations given in keycap.tsx cuz we don't wanna want to wrie again again 
+            <group > 
+                <Keycap position={[0.0, 1.0, 2.2]} />
+                <Keycap position={[0.8, 0.7, 2.0]} />
+                <Keycap position={[-0.7, 1.1, 2.4]} />
+                <Keycap position={[1.5, 0.6, 2.1]} />
+                <Keycap position={[0.9, 1.2, 1.6]} />
+                <Keycap position={[1.1, 0.5, 2.3]} />
+                <Keycap position={[0.3, 1.3, 1.9]} />
+                <Keycap position={[-1.0, 0.9, 2.5]} />
+                <Keycap position={[-0.5, 0.8, 2.8]} />
+            </group>
+
 
             <Environment files={"/hdr/blue-studio.hdr"}
                         environmentIntensity={0.05}
