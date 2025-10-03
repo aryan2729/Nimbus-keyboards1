@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { Float, useGLTF } from "@react-three/drei";
+import { Float, useGLTF, useTexture,  } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 
 type GLTFResult = GLTF & {
@@ -18,31 +18,35 @@ type keycapProps = {         // types define first
 
 export function Keycap({
     position = [0,0,0] ,        // pass defualt 
-    rotation = [Math.random() * Math.PI ,Math.random() * Math.PI ,Math.random() * Math.PI ],     // random rotation for each keycap
+    rotation = [0,0,0 ],     // random rotation for each keycap
     texture = 0
 
 } : keycapProps) {
 
   const { nodes } = useGLTF("/keycap.gltf") as unknown as GLTFResult;
 
-    const textures = [
-        "/keycap-uv-1.png",
-        "/keycap-uv-2.png",
-        "/keycap-uv-3.png",
-        "/keycap-uv-4.png",
-        "/keycap-uv-5.png",
-        "/keycap-uv-6.png",
-        "/keycap-uv-7.png",
-        "/keycap-uv-8.png",
-        "/keycap-uv-9.png",
+    const textures = [  // for keycaps colours and name
+        "/keycap_uv-1.png",
+        "/keycap_uv-2.png",
+        "/keycap_uv-3.png",
+        "/keycap_uv-4.png",
+        "/keycap_uv-5.png",
+        "/keycap_uv-6.png",
+        "/keycap_uv-7.png",
+        "/keycap_uv-8.png",
+        "/keycap_uv-9.png",
     ];
 
-    
+    const uvTexture = textures[texture];
+
+    const keycapTexture = useTexture(uvTexture);
+    keycapTexture.flipY = false;
+    keycapTexture.colorSpace = THREE.SRGBColorSpace;
 
 
   const placeholderMat = new THREE.MeshStandardMaterial({
-    color: "#cccccc",
-    roughness: 0.2,
+    map: keycapTexture,
+    roughness: 0.7,
   });
 
 
@@ -50,7 +54,7 @@ export function Keycap({
 
     //  Float in drei thing which float the objects  | now passing postion and rotation  
     <Float rotationIntensity={3}  > 
-    <group dispose={null} position={position} rotation={rotation}>   
+    <group dispose={null} position={position} rotation={rotation} >   
       <mesh
         castShadow
         receiveShadow

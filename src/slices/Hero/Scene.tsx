@@ -2,7 +2,7 @@
 
 import { Keyboard } from "@/components/Keyboard";
 import { Keycap } from "@/components/Keycap";
-import { Environment, Float, PerspectiveCamera } from "@react-three/drei";
+import { Environment, PerspectiveCamera } from "@react-three/drei";
 import { useControls } from "leva";
 
 
@@ -18,34 +18,41 @@ export function Scene(){
         rotationY : 0,
         rotationZ : 0
     });
-
+    
+    const scalingFactor = window.innerWidth <= 500 ? .5 : 1;
 
 
     return ( // here we can't use div etc cuz we're using here ( React Three Fiber )
 
         <group>             {/* use groups here same like div */}
 
-            <PerspectiveCamera  makeDefault position={[0,0,4]} fov={50} />          {/* like camera thing for perspective*/}
-            <Keyboard scale={9}
-                    position={[ 0.2 , -0.5 , 1.8]}   // hardcoded this after write {positonX, Y , z} here and taken positon form site and then hardcoded here correct values 
-                    rotation={[1.6 , 0.4 , 0]}   
+            <PerspectiveCamera  makeDefault position={[0,0,4]} fov={50} />          like camera thing for perspective
+
+            
+            {/* made another group cuz we wanted this site 3d thing also looks aligned and full in mobile also so we added scaling thing in this parent group of keyboard and all floatig keycaps */}
+            <group scale={scalingFactor} >            
+            <Keyboard 
+                scale={9}
+                position={[ 0.2 , -0.5 , 1.8]}   // hardcoded this after write {positonX, Y , z} here and taken positon form site and then hardcoded here correct values 
+                rotation={[1.6 , 0.4 , 0]}   
 
              />
             
 
             //keycaps  again group | rotations given in keycap.tsx cuz we don't wanna want to wrie again again 
             <group > 
-                <Keycap position={[0.0, 1.0, 2.2]} />
-                <Keycap position={[0.8, 0.7, 2.0]} />
-                <Keycap position={[-0.7, 1.1, 2.4]} />
-                <Keycap position={[1.5, 0.6, 2.1]} />
-                <Keycap position={[0.9, 1.2, 1.6]} />
-                <Keycap position={[1.1, 0.5, 2.3]} />
-                <Keycap position={[0.3, 1.3, 1.9]} />
-                <Keycap position={[-1.0, 0.9, 2.5]} />
-                <Keycap position={[-0.5, 0.8, 2.8]} />
+                <Keycap position={[0.0, -0.4, 2.6]}rotation={[0,2,3]} texture={0} />
+                <Keycap position={[0,1,1]}         rotation={[0,4,2]} texture={7}/>
+                <Keycap position={[-1.4, 0, 2.3]}  rotation={[3,2,1]} texture={1}/>
+                <Keycap position={[0.7,0.9,1.4]}   rotation={[3,2,0]} texture={4}/>
+                <Keycap position={[-1.8, 0.5, 1.5]}  rotation={[0,1,3]} texture={2}/>
+                <Keycap position={[1.3,-0.3,2.3]}  rotation={[1,2,0]} texture={6}/>
+                <Keycap position={[-0.1,0.9,2.6]}    rotation={[1,4,0]} texture={3}/>
+                <Keycap position={[0,1,2]}         rotation={[2,2,3]} texture={5}/>
+                <Keycap position={[-0.77,0.1,2.8]} rotation={[3,2,3]} texture={2}/>
+                <Keycap position={[2,0,1]}         rotation={[0,0,3]} texture={1}/>
             </group>
-
+            </group>
 
             <Environment files={"/hdr/blue-studio.hdr"}
                         environmentIntensity={0.05}
