@@ -1,11 +1,13 @@
 import { Keyboard } from "@/components/Keyboard"
 import { Stage, useTexture } from "@react-three/drei"
 import { KEYCAP_TEXTURES } from "."
-import { useMemo } from "react"
+import { useMemo, useRef, useState } from "react"
 import * as THREE from "three"
-import { texture } from "three/src/nodes/TSL.js"
 
+import { useGSAP }from '@gsap/react'
+import gsap from 'gsap'
 
+gsap.registerPlugin(useGSAP);
 
 type SceneProps = {
     selectedTextureId : string , 
@@ -19,8 +21,38 @@ export function Scene ( {
     onAnimationComplete
 } : SceneProps){
 
+    const KeyboardRef = useRef<THREE.Group>(null);
+
     const texturePaths = KEYCAP_TEXTURES.map((t)=> t.path);
     const textures = useTexture(texturePaths);
+    const [currentTextureId , setCurrentTextureId] = useState(selectedTextureId);
+
+    //useGSAP hook for animation 
+    useGSAP(()=>{
+        // Animate keyboard
+        if(!KeyboardRef.current || currentTextureId === selectedTextureId ) return ;
+
+        const keyboard = KeyboardRef.current;
+
+        const tl = gsap.timeline({
+            onComplete:()=>{
+                onAnimationComplete();
+            }
+        });
+
+        tl.to(keyboard.position , {
+            y:0.3 , 
+            duration:0.4 , 
+            ease: "power2.out" , 
+            onComplete:() => {setCurrentTextureId(selectedTextureId)}});
+
+        tl.to(keyboard.position , {
+            y:0 , 
+            duration:0.6 , 
+            ease: "elastic.out(1,0.4)"});     
+
+    },[selectedTextureId , currentTextureId]);     // dependency array whenever this change useGSAP hook run and run this animation 
+
 
     const materials = useMemo(()=> {
 
@@ -51,7 +83,7 @@ export function Scene ( {
     return (
         
         <Stage environment={"city"} intensity={0.05} shadows={"contact"}>
-            <group>
+            <group ref={KeyboardRef}>
                 <Keyboard keycapMaterial={materials[selectedTextureId]}  knobColor={currentKnobColor} />
             </group>
         </Stage>

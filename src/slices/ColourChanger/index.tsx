@@ -8,7 +8,6 @@ import { Bounded } from "@/components/Bounded";
 import clsx from "clsx";
 import { Scene } from "./Scene";
 import { Canvas } from "@react-three/fiber";
-import { Keycap } from "@/components/Keycap";
 
 
 
@@ -64,6 +63,7 @@ const ColourChanger: FC<ColourChangerProps> = ({ slice }) => {
   function handleTextureSelected(texture : keycapTexture){
     if(texture.id === selectedTextureId || isAnimating ) return 
 
+    setAnimating(true);
     setSelectedTextureId(texture.id);
     setBackgroundText(
       KEYCAP_TEXTURES.find((t)=> t.id === texture.id )?.name || ""
@@ -80,6 +80,7 @@ const ColourChanger: FC<ColourChangerProps> = ({ slice }) => {
   return (
 
     <section
+      id="keycap-changer" 
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
       className="relative flex h-[90vh] min-h-[1000px] flex-col overflow-hidden bg-linear-to-br from-[#0f172a] to-[#062f4a] text-white"
@@ -107,14 +108,16 @@ const ColourChanger: FC<ColourChangerProps> = ({ slice }) => {
 
       </svg>
 
-      <Canvas camera={{position : [0,0.5,0.5] , fov:45 , zoom:1.5  }} className="-mb-[10vh] grow" >
+      <Canvas camera={{position : [0,0.5,0.5] , fov:45 , zoom:1.4  }} className="-mb-[10vh] grow" >
         <Scene selectedTextureId={selectedTextureId} onAnimationComplete={handleAnimationComplete} />
       </Canvas>
 
       <Bounded className="relative shrink-0" innerClassName="flex flex-col lg:flex-row gap-6 lg:gap-8">
       
         <div className="max-w-md shrink-0">
-          <h2 className="font-bold-slanted mb-1 text-4xl uppercase lg:mb-2 lg:text-6xl ">
+          <h2
+            
+            className="font-bold-slanted mb-1 text-4xl uppercase lg:mb-2 lg:text-6xl ">
             <PrismicText field={slice.primary.heading} />
           </h2>
 
@@ -128,6 +131,7 @@ const ColourChanger: FC<ColourChangerProps> = ({ slice }) => {
             <li key={texture.id}>
 
               <button onClick={()=>{handleTextureSelected(texture)}}
+              disabled={isAnimating}
               className={clsx("flex aspect-square flex-col items-center justify-center rounded-lg border-2 p-4 hover:scale-105 motion-safe:transition-all motion-safe:durtion-300",
                 selectedTextureId === texture.id ? "border-[#81BFED] bg-[#81BFED]/20 " : "cursor-pointer border-gray-300 hover:border-gray-500", isAnimating && "cursor-not-allowed opacity-50"
               )}>
