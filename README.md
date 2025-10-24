@@ -4,7 +4,7 @@ A cutting-edge 3D interactive website showcasing the Nimbus mechanical keyboard 
 
 ## 🚀 Live Demo
 
-**Live Website:** [https://nimbus-keyboard.vercel.app](https://nimbus-keyboard.vercel.app)
+**Live Website:** [https://nimbus-keyboards1.vercel.app](https://nimbus-keyboards1.vercel.app)
 
 ## ✨ Features
 
